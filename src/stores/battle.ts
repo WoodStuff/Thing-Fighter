@@ -24,10 +24,14 @@ export const useBattleStore = defineStore('battle', () => {
 	function checkEnd() {
 		if (!enemy.isDead && !player.isDead) return;
 
-		stopBattle();
+		if (player.isDead) {
+			stopIntervals();
+		}
 
 		if (enemy.isDead) {
 			enemy.regenerate();
+			stopIntervals();
+			startIntervals();
 		}
 	}
 
@@ -38,11 +42,17 @@ export const useBattleStore = defineStore('battle', () => {
 			player.hp = player.hpMax;
 		}
 
+		startIntervals();
+	}
+
+	function startIntervals() {
+		if (battling.value) return;
+		
 		playerTurnInterval.value = setInterval(playerTurn, player.attackCooldown);
 		enemyTurnInterval.value = setInterval(enemyTurn, enemy.attackCooldown);
 	}
 
-	function stopBattle() {
+	function stopIntervals() {
 		clearInterval(playerTurnInterval.value);
 		clearInterval(enemyTurnInterval.value);
 		playerTurnInterval.value = -1;
