@@ -1,14 +1,11 @@
-import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export const usePlayerStore = defineStore('player', () => {
-	const hpMax = ref(10);
-	const hp = ref(10);
-	const attack = ref(3);
-	
-	return {
-		hpMax,
-		hp,
-		attack,
-	};
+const hpMax = ref(10);
+const hp = ref(10);
+const attack = ref(3);
+
+export const usePlayer = () => ({
+	hpMax,
+	hp,
+	attack,
 });
