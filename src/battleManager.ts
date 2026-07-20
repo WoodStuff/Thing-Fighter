@@ -1,11 +1,13 @@
+import { computed, ref } from "vue";
 import { useEnemy } from "./stores/enemy";
 import { usePlayer } from "./stores/player";
 
 const player = usePlayer();
 const enemy = useEnemy();
 
-let playerTurnInterval = -1;
-let enemyTurnInterval = -1;
+const playerTurnInterval = ref(-1);
+const enemyTurnInterval = ref(-1);
+const battling = computed(() => playerTurnInterval.value !== -1 || enemyTurnInterval.value !== -1);
 
 function playerTurn() {
 	enemy.damageFor(player.attack.value);
@@ -18,11 +20,35 @@ function enemyTurn() {
 }
 
 function checkEnd() {
-	if (enemy.isDead.value) clearInterval(playerTurnInterval);
-	if (player.isDead.value) clearInterval(enemyTurnInterval);
+	if (!enemy.isDead.value && !player.isDead.value) return;
+
+	stopBattle();
+
+	if (enemy.isDead.value) {
+		enemy.regenerate();
+	}
 }
 
-export function startBattle() {
-	playerTurnInterval = setInterval(playerTurn, player.attackCooldown.value);
-	enemyTurnInterval = setInterval(enemyTurn, enemy.attackCooldown.value);
+function startBattle() {
+	if (battling.value) return;
+
+	if (player.isDead.value) {
+		player.hp.value = player.hpMax.value;
+	}
+
+	playerTurnInterval.value = setInterval(playerTurn, player.attackCooldown.value);
+	enemyTurnInterval.value = setInterval(enemyTurn, enemy.attackCooldown.value);
+}
+
+function stopBattle() {
+	clearInterval(playerTurnInterval.value);
+	clearInterval(enemyTurnInterval.value);
+	playerTurnInterval.value = -1;
+	enemyTurnInterval.value = -1;
+}
+
+export {
+	battling,
+
+	startBattle,
 }
