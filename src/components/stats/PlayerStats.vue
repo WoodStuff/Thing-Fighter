@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { usePlayer } from '@/stores/player';
+import { usePlayerStore } from '@/stores/player';
+import { storeToRefs } from 'pinia';
 
-const { hpMax, hp, attack } = usePlayer();
+const playerStore = usePlayerStore();
+const { hpMax, hp, attack } = storeToRefs(playerStore);
 </script>
 
 <template>

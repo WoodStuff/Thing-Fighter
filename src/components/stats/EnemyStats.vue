@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { useEnemy } from '@/stores/enemy';
+import { useEnemyStore } from '@/stores/enemy';
+import { storeToRefs } from 'pinia';
 
-const { hpMax, hp, attack } = useEnemy();
+const enemyStore = useEnemyStore();
+const { hpMax, hp, attack } = storeToRefs(enemyStore);
 </script>
 
 <template>

@@ -1,41 +1,44 @@
+import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
 
-const hpMax = ref(0);
-const hp = ref(0);
-const attack = ref(0);
-const attackCooldown = ref(0);
+export const useEnemyStore = defineStore('enemy', () => {
+	const hpMax = ref(0);
+	const hp = ref(0);
+	const attack = ref(0);
+	const attackCooldown = ref(0);
 
-const isDead = computed(() => hp.value <= 0);
+	const isDead = computed(() => hp.value <= 0);
 
-function damageFor(amount: number) {
-	if (amount <= 0) return;
+	function damageFor(amount: number) {
+		if (amount <= 0) return;
 
-	hp.value -= amount;
-}
+		hp.value -= amount;
+	}
 
-function regenerate() {
-	hpMax.value = 10;
-	hp.value = hpMax.value;
+	function regenerate() {
+		hpMax.value = 10;
+		hp.value = hpMax.value;
 
-	attack.value = 2;
-	attackCooldown.value = 600;
-}
+		attack.value = 2;
+		attackCooldown.value = 600;
+	}
 
-regenerate();
+	regenerate();
 
-watch(hp, () => {
-	if (hp.value < 0) hp.value = 0;
-});
+	watch(hp, () => {
+		if (hp.value < 0) hp.value = 0;
+	});
 
-export const useEnemy = () => ({
-	hpMax,
-	hp,
-	attack,
-	attackCooldown,
-	
-	isDead,
+	return {
+		hpMax,
+		hp,
+		attack,
+		attackCooldown,
+		
+		isDead,
 
-	damageFor,
+		damageFor,
 
-	regenerate,
+		regenerate,
+	};
 });
