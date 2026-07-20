@@ -2,9 +2,13 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const usePlayerStore = defineStore('player', () => {
-	const coolAsFuckNumber = ref(78);
+	const hpMax = ref(10);
+	const hp = ref(10);
+	const attack = ref(10);
 	
 	return {
-		coolAsFuckNumber
+		hpMax,
+		hp,
+		attack,
 	};
 });
