@@ -7,6 +7,9 @@ const { hpMax, hp, attack } = storeToRefs(player);
 </script>
 
 <template>
-	<p>HP: {{ hp }}/{{ hpMax }}</p>
-	<p>{{ attack }} DMG</p>
+	<div>
+		<h1>Player</h1>
+		<p>HP: {{ hp }}/{{ hpMax }}</p>
+		<p>{{ attack }} DMG</p>
+	</div>
 </template>
