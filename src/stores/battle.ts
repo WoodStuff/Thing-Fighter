@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { useEnemyStore } from "./enemy";
 import { usePlayerStore } from "./player";
 import { defineStore } from "pinia";
@@ -12,16 +12,20 @@ export const useBattleStore = defineStore('battle', () => {
 
 	const battling = computed(() => player.isAttacking || enemy.isAttacking);
 
-	function playerTurn() {
+	async function playerTurn() {
 		const damage = random(player.attackLow, player.attackHigh)
 		enemy.damageFor(damage);
+
+		await nextTick();
 
 		checkDeath();
 	}
 
-	function enemyTurn() {
+	async function enemyTurn() {
 		const damage = random(enemy.attackLow, enemy.attackHigh)
 		player.damageFor(damage);
+
+		await nextTick();
 
 		checkDeath();
 	}

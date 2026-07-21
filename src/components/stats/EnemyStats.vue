@@ -2,6 +2,7 @@
 import { useEnemyStore } from '@/stores/enemy';
 import { storeToRefs } from 'pinia';
 import HPBar from '../HPBar.vue';
+import DamageText from '../DamageText.vue';
 
 const enemyStore = useEnemyStore();
 const { hpMax, hp, attackLow, attackHigh } = storeToRefs(enemyStore);
@@ -12,6 +13,8 @@ const { hpMax, hp, attackLow, attackHigh } = storeToRefs(enemyStore);
 		<h1>Enemy</h1>
 		<HPBar :current="hp" :max="hpMax" />
 		<p>{{ attackLow }}-{{ attackHigh }} DMG</p>
+
+		<DamageText :value="hp" :max="hpMax" />
 	</div>
 </template>
 
@@ -21,5 +24,7 @@ const { hpMax, hp, attackLow, attackHigh } = storeToRefs(enemyStore);
 	flex-direction: column;
 	align-items: center;
 	gap: 4px;
+
+	position: relative;
 }
 </style>

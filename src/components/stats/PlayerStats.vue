@@ -2,6 +2,7 @@
 import { usePlayerStore } from '@/stores/player';
 import { storeToRefs } from 'pinia';
 import HPBar from '../HPBar.vue';
+import DamageText from '../DamageText.vue';
 
 const playerStore = usePlayerStore();
 const { hpMax, hp, attackLow, attackHigh } = storeToRefs(playerStore);
@@ -12,6 +13,8 @@ const { hpMax, hp, attackLow, attackHigh } = storeToRefs(playerStore);
 		<h1>Player</h1>
 		<HPBar :current="hp" :max="hpMax" />
 		<p>{{ attackLow }}-{{ attackHigh }} DMG</p>
+
+		<DamageText :value="hp" :max="hpMax" />
 	</div>
 </template>
 
@@ -21,5 +24,7 @@ const { hpMax, hp, attackLow, attackHigh } = storeToRefs(playerStore);
 	flex-direction: column;
 	align-items: center;
 	gap: 4px;
+
+	position: relative;
 }
 </style>
