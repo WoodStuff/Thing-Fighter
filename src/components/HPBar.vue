@@ -19,14 +19,16 @@ const width = computed(() => `${current / max * 100}%`);
 <style lang="scss" scoped>
 .hp-bar {
 	position: relative;
-	width: 224px;
+	text-align: center;
+	overflow: hidden;
 
 	border: black solid 1px;
-	text-align: center;
+	border-radius: 5px;
+	width: 224px;
 
 	& > .progress {
 		position: absolute;
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: rgba(0, 0, 0, 0.15);
 
 		height: 100%;
 		left: 0;
