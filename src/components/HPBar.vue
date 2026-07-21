@@ -19,7 +19,7 @@ const width = computed(() => `${current / max * 100}%`);
 <style lang="scss" scoped>
 .hp-bar {
 	position: relative;
-	width: 200px;
+	width: 224px;
 
 	border: black solid 1px;
 	text-align: center;

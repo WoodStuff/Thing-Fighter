@@ -28,10 +28,12 @@ const { startBattle } = battleStore;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 20px;
+	gap: 12px;
 
 	width: 100%;
 	height: 100%;
+
+	font-size: 1.2em;
 
 	& > .stats {
 		display: flex;

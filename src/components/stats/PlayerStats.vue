@@ -20,5 +20,6 @@ const { hpMax, hp, attack } = storeToRefs(playerStore);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 4px;
 }
 </style>
