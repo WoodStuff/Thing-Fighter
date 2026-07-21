@@ -3,6 +3,7 @@ import { useEnemyStore } from "./enemy";
 import { usePlayerStore } from "./player";
 import { defineStore } from "pinia";
 import { useStatsStore } from "./stats";
+import { random } from "@/utils";
 
 export const useBattleStore = defineStore('battle', () => {
 	const player = usePlayerStore();
@@ -12,12 +13,16 @@ export const useBattleStore = defineStore('battle', () => {
 	const battling = computed(() => player.isAttacking || enemy.isAttacking);
 
 	function playerTurn() {
-		enemy.damageFor(player.attack);
+		const damage = random(player.attackLow, player.attackHigh)
+		enemy.damageFor(damage);
+
 		checkDeath();
 	}
 
 	function enemyTurn() {
-		player.damageFor(enemy.attack);
+		const damage = random(enemy.attackLow, enemy.attackHigh)
+		player.damageFor(damage);
+		
 		checkDeath();
 	}
 

@@ -4,14 +4,14 @@ import { storeToRefs } from 'pinia';
 import HPBar from '../HPBar.vue';
 
 const enemyStore = useEnemyStore();
-const { hpMax, hp, attack } = storeToRefs(enemyStore);
+const { hpMax, hp, attackLow, attackHigh } = storeToRefs(enemyStore);
 </script>
 
 <template>
 	<div class="enemy-stats">
 		<h1>Enemy</h1>
 		<HPBar :current="hp" :max="hpMax" />
-		<p>{{ attack }} DMG</p>
+		<p>{{ attackLow }}-{{ attackHigh }} DMG</p>
 	</div>
 </template>
 

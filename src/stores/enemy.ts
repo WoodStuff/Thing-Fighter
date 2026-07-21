@@ -4,7 +4,9 @@ import { computed, ref, watch } from "vue";
 export const useEnemyStore = defineStore('enemy', () => {
 	const hpMax = ref(0);
 	const hp = ref(0);
-	const attack = ref(0);
+	const baseAttack = ref(0);
+	const attackLow = computed(() => Math.round(baseAttack.value * 0.75));
+	const attackHigh = computed(() => Math.round(baseAttack.value * 1.25));
 	const attackCooldown = ref(0);
 
 	const isDead = computed(() => hp.value <= 0);
@@ -31,7 +33,7 @@ export const useEnemyStore = defineStore('enemy', () => {
 		hpMax.value = 10;
 		hp.value = hpMax.value;
 
-		attack.value = 2;
+		baseAttack.value = 2;
 		attackCooldown.value = 600;
 
 		stopAttacking();
@@ -47,7 +49,9 @@ export const useEnemyStore = defineStore('enemy', () => {
 	return {
 		hpMax,
 		hp,
-		attack,
+		baseAttack,
+		attackLow,
+		attackHigh,
 		attackCooldown,
 		
 		isDead,
