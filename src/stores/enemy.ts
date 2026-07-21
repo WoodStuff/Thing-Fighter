@@ -1,3 +1,4 @@
+import { random, randomDecimal } from "@/utils";
 import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
 
@@ -30,10 +31,10 @@ export const useEnemyStore = defineStore('enemy', () => {
 	}
 
 	function regenerate(turnFunction?: () => void) {
-		hpMax.value = 10;
+		hpMax.value = random(10, 15);
 		hp.value = hpMax.value;
 
-		baseAttack.value = 2;
+		baseAttack.value = randomDecimal(2, 3);
 		attackCooldown.value = 600;
 
 		stopAttacking();
