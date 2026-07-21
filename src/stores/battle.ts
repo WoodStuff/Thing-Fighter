@@ -2,32 +2,36 @@ import { computed, ref } from "vue";
 import { useEnemyStore } from "./enemy";
 import { usePlayerStore } from "./player";
 import { defineStore } from "pinia";
+import { useStatsStore } from "./stats";
 
 export const useBattleStore = defineStore('battle', () => {
 	const player = usePlayerStore();
 	const enemy = useEnemyStore();
+	const stats = useStatsStore();
 
 	const battling = computed(() => player.isAttacking || enemy.isAttacking);
 
 	function playerTurn() {
 		enemy.damageFor(player.attack);
-		checkEnd();
+		checkDeath();
 	}
 
 	function enemyTurn() {
 		player.damageFor(enemy.attack);
-		checkEnd();
+		checkDeath();
 	}
 
-	function checkEnd() {
+	function checkDeath() {
 		if (!enemy.isDead && !player.isDead) return;
 
 		if (player.isDead) {
 			stopBattle();
+			stats.deaths++;
 		}
 
 		if (enemy.isDead) {
 			enemy.regenerate(enemyTurn);
+			stats.kills++;
 		}
 	}
 

@@ -3,6 +3,7 @@ import { useBattleStore } from '@/stores/battle.ts';
 import EnemyStats from './stats/EnemyStats.vue';
 import PlayerStats from './stats/PlayerStats.vue';
 import { storeToRefs } from 'pinia';
+import GameStats from './GameStats.vue';
 
 const battleStore = useBattleStore();
 const { battling } = storeToRefs(battleStore);
@@ -19,6 +20,7 @@ const { startBattle } = battleStore;
 			@click="startBattle"
 			:disabled="battling"
 		>Start Battle</button>
+		<GameStats />
 	</div>
 </template>
 
