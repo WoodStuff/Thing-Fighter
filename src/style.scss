@@ -19,7 +19,6 @@ button {
 
 	&:hover:not(:disabled) {
 		background-color: #cccccc;
-		.dark & { background-color: #63646c;}
 	}
 	&:active:not(:disabled) {
 		border-style: inset;
