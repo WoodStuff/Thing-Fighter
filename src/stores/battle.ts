@@ -27,10 +27,7 @@ export const useBattleStore = defineStore('battle', () => {
 		}
 
 		if (enemy.isDead) {
-			enemy.regenerate();
-
-			enemy.stopAttacking();
-			enemy.startAttacking(enemyTurn);
+			enemy.regenerate(enemyTurn);
 		}
 	}
 

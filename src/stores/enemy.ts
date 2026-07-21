@@ -27,12 +27,15 @@ export const useEnemyStore = defineStore('enemy', () => {
 		hp.value -= amount;
 	}
 
-	function regenerate() {
+	function regenerate(turnFunction?: () => void) {
 		hpMax.value = 10;
 		hp.value = hpMax.value;
 
 		attack.value = 2;
 		attackCooldown.value = 600;
+
+		stopAttacking();
+		if (turnFunction) startAttacking(turnFunction);
 	}
 
 	regenerate();
