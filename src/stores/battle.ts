@@ -22,7 +22,7 @@ export const useBattleStore = defineStore('battle', () => {
 	function enemyTurn() {
 		const damage = random(enemy.attackLow, enemy.attackHigh)
 		player.damageFor(damage);
-		
+
 		checkDeath();
 	}
 
@@ -35,8 +35,10 @@ export const useBattleStore = defineStore('battle', () => {
 		}
 
 		if (enemy.isDead) {
-			enemy.regenerate(enemyTurn);
+			stats.gold += enemy.goldDrop;
 			stats.kills++;
+
+			enemy.regenerate(enemyTurn);
 		}
 	}
 

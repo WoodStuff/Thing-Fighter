@@ -10,10 +10,12 @@ export const useEnemyStore = defineStore('enemy', () => {
 	const attackHigh = computed(() => Math.round(baseAttack.value * 1.25));
 	const attackCooldown = ref(0);
 
+	const goldDrop = ref(0);
+
 	const isDead = computed(() => hp.value <= 0);
+	const isAttacking = computed(() => attackInterval.value !== -1);
 
 	const attackInterval = ref(-1);
-	const isAttacking = computed(() => attackInterval.value !== -1);
 
 	function startAttacking(turnFunction: () => void) {
 		attackInterval.value = setInterval(turnFunction, attackCooldown.value);
@@ -37,6 +39,8 @@ export const useEnemyStore = defineStore('enemy', () => {
 		baseAttack.value = randomDecimal(2, 3);
 		attackCooldown.value = 600;
 
+		goldDrop.value = random(2, 4);
+
 		stopAttacking();
 		if (turnFunction) startAttacking(turnFunction);
 	}
@@ -54,6 +58,8 @@ export const useEnemyStore = defineStore('enemy', () => {
 		attackLow,
 		attackHigh,
 		attackCooldown,
+
+		goldDrop,
 		
 		isDead,
 		isAttacking,

@@ -3,19 +3,30 @@ import { useStatsStore } from '@/stores/stats';
 import { storeToRefs } from 'pinia';
 
 const stats = useStatsStore();
-const { kills, deaths } = storeToRefs(stats);
+const { gold, kills, deaths } = storeToRefs(stats);
 </script>
 
 <template>
 	<div class="game-stats">
-		<p>{{ kills }}⚔️</p>
-		<p>{{ deaths }}💀</p>
+		<div class="row">
+			<p>{{ gold }}🪙</p>
+		</div>
+		<div class="row">
+			<p>{{ kills }}⚔️</p>
+			<p>{{ deaths }}💀</p>
+		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 .game-stats {
 	display: flex;
-	gap: 20px;
+	flex-direction: column;
+	align-items: center;
+
+	.row {
+		display: flex;
+		gap: 20px;
+	}
 }
 </style>
