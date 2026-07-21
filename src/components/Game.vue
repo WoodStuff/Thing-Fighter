@@ -10,19 +10,32 @@ const { startBattle } = battleStore;
 </script>
 
 <template>
-	<div class="stats">
-		<PlayerStats />
-		<EnemyStats />
+	<div id="game">
+		<div class="stats">
+			<PlayerStats />
+			<EnemyStats />
+		</div>
+		<button
+			@click="startBattle"
+			:disabled="battling"
+		>Start Battle</button>
 	</div>
-	<button
-		@click="startBattle"
-		:disabled="battling"
-	>Start Battle</button>
 </template>
 
 <style lang="scss" scoped>
-.stats {
+#game {
 	display: flex;
-	gap: 80px;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+
+	width: 100%;
+	height: 100%;
+
+	& > .stats {
+		display: flex;
+		gap: 80px;
+	}
 }
 </style>
