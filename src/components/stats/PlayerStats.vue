@@ -1,15 +1,24 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/player';
 import { storeToRefs } from 'pinia';
+import HPBar from '../HPBar.vue';
 
 const playerStore = usePlayerStore();
 const { hpMax, hp, attack } = storeToRefs(playerStore);
 </script>
 
 <template>
-	<div>
+	<div class="player-stats">
 		<h1>Player</h1>
-		<p>HP: {{ hp }}/{{ hpMax }}</p>
+		<HPBar :current="hp" :max="hpMax" />
 		<p>{{ attack }} DMG</p>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+.player-stats {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+</style>
