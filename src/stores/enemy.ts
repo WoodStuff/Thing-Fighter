@@ -9,6 +9,18 @@ export const useEnemyStore = defineStore('enemy', () => {
 
 	const isDead = computed(() => hp.value <= 0);
 
+	const attackInterval = ref(-1);
+	const isAttacking = computed(() => attackInterval.value !== -1);
+
+	function startAttacking(turnFunction: () => void) {
+		attackInterval.value = setInterval(turnFunction, attackCooldown.value);
+	}
+
+	function stopAttacking() {
+		clearInterval(attackInterval.value)
+		attackInterval.value = -1;
+	}
+
 	function damageFor(amount: number) {
 		if (amount <= 0) return;
 
@@ -36,6 +48,12 @@ export const useEnemyStore = defineStore('enemy', () => {
 		attackCooldown,
 		
 		isDead,
+		isAttacking,
+
+		attackInterval,
+
+		startAttacking,
+		stopAttacking,
 
 		damageFor,
 

@@ -7,9 +7,7 @@ export const useBattleStore = defineStore('battle', () => {
 	const player = usePlayerStore();
 	const enemy = useEnemyStore();
 
-	const playerTurnInterval = ref(-1);
-	const enemyTurnInterval = ref(-1);
-	const battling = computed(() => playerTurnInterval.value !== -1 || enemyTurnInterval.value !== -1);
+	const battling = computed(() => player.isAttacking || enemy.isAttacking);
 
 	function playerTurn() {
 		enemy.damageFor(player.attack);
@@ -25,13 +23,14 @@ export const useBattleStore = defineStore('battle', () => {
 		if (!enemy.isDead && !player.isDead) return;
 
 		if (player.isDead) {
-			stopIntervals();
+			stopBattle();
 		}
 
 		if (enemy.isDead) {
 			enemy.regenerate();
-			stopIntervals();
-			startIntervals();
+
+			enemy.stopAttacking();
+			enemy.startAttacking(enemyTurn);
 		}
 	}
 
@@ -42,26 +41,16 @@ export const useBattleStore = defineStore('battle', () => {
 			player.hp = player.hpMax;
 		}
 
-		startIntervals();
+		player.startAttacking(playerTurn);
+		enemy.startAttacking(enemyTurn);
 	}
 
-	function startIntervals() {
-		if (battling.value) return;
-		
-		playerTurnInterval.value = setInterval(playerTurn, player.attackCooldown);
-		enemyTurnInterval.value = setInterval(enemyTurn, enemy.attackCooldown);
-	}
-
-	function stopIntervals() {
-		clearInterval(playerTurnInterval.value);
-		clearInterval(enemyTurnInterval.value);
-		playerTurnInterval.value = -1;
-		enemyTurnInterval.value = -1;
+	function stopBattle() {
+		player.stopAttacking();
+		enemy.stopAttacking();
 	}
 
 	return {
-		playerTurnInterval,
-		enemyTurnInterval,
 		battling,
 
 		startBattle,

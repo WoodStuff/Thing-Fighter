@@ -9,6 +9,18 @@ export const usePlayerStore = defineStore('player', () => {
 
 	const isDead = computed(() => hp.value <= 0);
 
+	const attackInterval = ref(-1);
+	const isAttacking = computed(() => attackInterval.value !== -1);
+
+	function startAttacking(turnFunction: () => void) {
+		attackInterval.value = setInterval(turnFunction, attackCooldown.value);
+	}
+
+	function stopAttacking() {
+		clearInterval(attackInterval.value)
+		attackInterval.value = -1;
+	}
+
 	function damageFor(amount: number) {
 		if (amount <= 0) return;
 
@@ -26,6 +38,12 @@ export const usePlayerStore = defineStore('player', () => {
 		attackCooldown,
 
 		isDead,
+
+		attackInterval,
+		isAttacking,
+
+		startAttacking,
+		stopAttacking,
 
 		damageFor,
 	};
