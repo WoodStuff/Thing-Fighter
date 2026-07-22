@@ -37,7 +37,7 @@ export const useEnemyStore = defineStore('enemy', () => {
 		hp.value = hpMax.value;
 
 		baseAttack.value = randomDecimal(2, 3);
-		attackCooldown.value = 600;
+		attackCooldown.value = random(350, 750);
 
 		goldDrop.value = random(2, 4);
 
