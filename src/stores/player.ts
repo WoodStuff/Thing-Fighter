@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
 
 export const usePlayerStore = defineStore('player', () => {
+	// stats
 	const hpMax = ref(15);
 	const hp = ref(15);
 	const baseAttack = ref(3);
@@ -9,11 +10,8 @@ export const usePlayerStore = defineStore('player', () => {
 	const attackHigh = computed(() => Math.round(baseAttack.value * 1.25));
 	const attackCooldown = ref(500);
 
-	const isDead = computed(() => hp.value <= 0);
-	const isAttacking = computed(() => attackInterval.value !== -1);
-
+	// battle
 	const attackInterval = ref(-1);
-
 	function startAttacking(turnFunction: () => void) {
 		attackInterval.value = setInterval(turnFunction, attackCooldown.value);
 	}
@@ -22,6 +20,11 @@ export const usePlayerStore = defineStore('player', () => {
 		attackInterval.value = -1;
 	}
 
+	// flags
+	const isDead = computed(() => hp.value <= 0);
+	const isAttacking = computed(() => attackInterval.value !== -1);
+
+	// actions
 	function damageFor(amount: number) {
 		if (amount <= 0) return;
 
