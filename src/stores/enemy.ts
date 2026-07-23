@@ -1,7 +1,6 @@
 import { random, randomDecimal } from "@/utils";
-import { defineStore, storeToRefs } from "pinia";
+import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
-import { useBattleStore } from "./battle";
 
 //#region stats
 const hpMax = ref(0);
