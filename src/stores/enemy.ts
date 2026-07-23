@@ -42,17 +42,27 @@ function damageFor(amount: number) {
 
 //#region enemy generation
 function regenerate(turnFunction?: () => void) {
-	hpMax.value = random(10, 15);
-	hp.value = hpMax.value;
-
-	baseAttack.value = randomDecimal(2, 3);
-	attackCooldown.value = random(350, 750);
-
 	number.value++;
+
+	setStats();
+	
 	goldDrop.value = random(2, 4);
 
 	stopAttacking();
 	if (turnFunction) startAttacking(turnFunction);
+}
+
+function setStats() {
+	const n = number.value - 1;
+
+	const healthMult = 1.04 ** (n);
+	const attackMult = 1.04 ** (n);
+
+	hpMax.value = Math.round(randomDecimal(10, 15) * healthMult);
+	hp.value = hpMax.value;
+
+	baseAttack.value = Math.round(randomDecimal(2, 3) * attackMult);
+	attackCooldown.value = random(350, 750);
 }
 //#endregion
 
