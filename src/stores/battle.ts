@@ -67,9 +67,8 @@ function onEnemyDeath() {
 function startBattle() {
 	if (battling.value) return;
 
-	if (player.isDead) {
-		player.hp = player.hpMax;
-	}
+	player.hp = player.hpMax;
+	enemy.hp += Math.round(enemy.hpMax * 0.25);
 
 	player.startAttacking(playerTurn);
 	enemy.startAttacking(enemyTurn);
