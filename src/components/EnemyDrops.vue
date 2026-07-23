@@ -2,9 +2,9 @@
 import { useEnemyStore } from '@/stores/enemy';
 import gsap from 'gsap';
 import { storeToRefs } from 'pinia';
-import { ref, watch } from 'vue';
+import { ref, useTemplateRef, watch } from 'vue';
 
-const el = ref<HTMLElement>();
+const el = useTemplateRef('el');
 
 const enemyStore = useEnemyStore();
 const { number } = storeToRefs(enemyStore);
