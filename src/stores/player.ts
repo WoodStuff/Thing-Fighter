@@ -36,6 +36,7 @@ function damageFor(amount: number) {
 
 watch(hp, () => {
 	if (hp.value < 0) hp.value = 0;
+	if (hp.value > hpMax.value) hp.value = hpMax.value;
 });
 
 export const usePlayerStore = defineStore('player', () => ({
