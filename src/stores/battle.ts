@@ -11,6 +11,12 @@ let stats: ReturnType<typeof useStatsStore>;
 
 const battling = computed(() => player.isAttacking || enemy.isAttacking);
 
+//#region game position
+const totalEnemyNumber = ref(0);
+const zone = computed(() => Math.floor((totalEnemyNumber.value - 1) / 100 + 1));
+const enemyNumber = computed(() => (totalEnemyNumber.value - 1) % 100 + 1);
+//#endregion
+
 //#region turns
 async function playerTurn() {
 	const damage = random(player.attackLow, player.attackHigh)
@@ -53,7 +59,7 @@ function onEnemyDeath() {
 	stats.gold += enemy.goldDrop;
 	stats.kills++;
 
-	enemy.regenerate(enemyTurn);
+	nextEnemy(enemyTurn);
 }
 //#endregion
 
@@ -73,6 +79,11 @@ function stopBattle() {
 	player.stopAttacking();
 	enemy.stopAttacking();
 }
+
+function nextEnemy(turnFunction?: () => void) {
+	totalEnemyNumber.value++;
+	enemy.regenerate(totalEnemyNumber.value, turnFunction);
+}
 //#endregion
 
 export const useBattleStore = defineStore('battle', () => {
@@ -80,8 +91,14 @@ export const useBattleStore = defineStore('battle', () => {
 	enemy = useEnemyStore();
 	stats = useStatsStore();
 
+	nextEnemy();
+
 	return {
 		battling,
+
+		zone,
+		totalEnemyNumber,
+		enemyNumber,
 
 		startBattle,
 	}

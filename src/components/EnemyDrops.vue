@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useBattleStore } from '@/stores/battle';
 import { useEnemyStore } from '@/stores/enemy';
 import gsap from 'gsap';
 import { storeToRefs } from 'pinia';
@@ -7,7 +8,9 @@ import { ref, useTemplateRef, watch } from 'vue';
 const el = useTemplateRef('el');
 
 const enemyStore = useEnemyStore();
-const { number } = storeToRefs(enemyStore);
+
+const battleStore = useBattleStore();
+const { enemyNumber } = storeToRefs(battleStore);
 
 const goldDrop = ref(0);
 
@@ -43,7 +46,7 @@ function pop() {
 }
 
 fetchEnemyInfo();
-watch(number, pop);
+watch(enemyNumber, pop);
 </script>
 
 <template>

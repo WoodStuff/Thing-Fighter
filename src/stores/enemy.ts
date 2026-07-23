@@ -1,6 +1,7 @@
 import { random, randomDecimal } from "@/utils";
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 import { computed, ref, watch } from "vue";
+import { useBattleStore } from "./battle";
 
 //#region stats
 const hpMax = ref(0);
@@ -28,7 +29,6 @@ const isAttacking = computed(() => attackInterval.value !== -1);
 //#endregion
 
 //#region enemy-specific attributes
-const number = ref(0);
 const goldDrop = ref(0);
 //#endregion
 
@@ -41,10 +41,8 @@ function damageFor(amount: number) {
 //#endregion
 
 //#region enemy generation
-function regenerate(turnFunction?: () => void) {
-	number.value++;
-
-	setStats();
+function regenerate(enemyNumber: number, turnFunction?: () => void) {
+	setStats(enemyNumber);
 	
 	goldDrop.value = random(2, 4);
 
@@ -52,8 +50,8 @@ function regenerate(turnFunction?: () => void) {
 	if (turnFunction) startAttacking(turnFunction);
 }
 
-function setStats() {
-	const n = number.value - 1;
+function setStats(enemyNumber: number) {
+	const n = enemyNumber - 1;
 
 	const healthMult = 1.04 ** (n);
 	const attackMult = 1.04 ** (n);
@@ -65,8 +63,6 @@ function setStats() {
 	attackCooldown.value = random(350, 750);
 }
 //#endregion
-
-regenerate();
 
 watch(hp, () => {
 	if (hp.value < 0) hp.value = 0;
@@ -80,7 +76,6 @@ export const useEnemyStore = defineStore('enemy', () => ({
 	attackHigh,
 	attackCooldown,
 
-	number,
 	goldDrop,
 	
 	isDead,

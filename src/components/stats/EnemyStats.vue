@@ -6,14 +6,14 @@ import DamageText from '../DamageText.vue';
 import EnemyDrops from '../EnemyDrops.vue';
 
 const enemyStore = useEnemyStore();
-const { hpMax, hp, attackLow, attackHigh, number } = storeToRefs(enemyStore);
+const { hpMax, hp, attackLow, attackHigh } = storeToRefs(enemyStore);
 </script>
 
 <template>
 	<div class="enemy-stats">
 		<EnemyDrops />
 
-		<h1>Enemy {{ number }}</h1>
+		<h1>Enemy</h1>
 		<HPBar :current="hp" :max="hpMax" />
 		<p>{{ attackLow }}-{{ attackHigh }} DMG</p>
 
