@@ -49,8 +49,7 @@ const drop = getDropAt(zone, id);
 
 	& > .id {
 		position: absolute;
-		top: 0;
-		left: 2px;
+		top: 40px;
 
 		font-size: 0.6em;
 
