@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { getDropAt } from '@/drops';
 import { useBattleStore } from '@/stores/battle';
-import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
+import HPBar from '../HPBar.vue';
+import GameStats from '../GameStats.vue';
 
 const { zone, id } = defineProps<{
 	zone: number,
@@ -12,6 +14,8 @@ const battle = useBattleStore();
 
 const current = computed(() => id === battle.enemyNumber);
 const cleared = computed(() => id < battle.enemyNumber);
+
+const drop = getDropAt(zone, id);
 </script>
 
 <template>
@@ -20,6 +24,11 @@ const cleared = computed(() => id < battle.enemyNumber);
 		:class="{ current, cleared }"
 	>
 		<p class="id">{{ id }}</p>
+		<component
+			v-if="drop"
+			class="icon"
+			:is="drop.icon"
+		/>
 	</div>
 </template>
 
@@ -51,6 +60,10 @@ const cleared = computed(() => id < battle.enemyNumber);
 
 	&:hover > .id {
 		opacity: 1;
+	}
+
+	& > .icon {
+		font-size: 1em;
 	}
 
 	&.current {
