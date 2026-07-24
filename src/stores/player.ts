@@ -7,7 +7,7 @@ const hp = ref(15);
 const baseAttack = ref(3);
 const attackLow = computed(() => Math.round(baseAttack.value * 0.75));
 const attackHigh = computed(() => Math.round(baseAttack.value * 1.25));
-const attackCooldown = ref(500);
+const attackCooldown = ref(5);
 //#endregion
 
 //#region battle

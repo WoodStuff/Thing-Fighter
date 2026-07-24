@@ -4,7 +4,8 @@ import EnemyStats from './stats/EnemyStats.vue';
 import PlayerStats from './stats/PlayerStats.vue';
 import { storeToRefs } from 'pinia';
 import GameStats from './GameStats.vue';
-import ZoneInfo from './ZoneInfo.vue';
+import ZoneInfo from './top/ZoneInfo.vue';
+import EnemyLine from './top/EnemyLine.vue';
 
 const battleStore = useBattleStore();
 const { battling } = storeToRefs(battleStore);
@@ -14,6 +15,7 @@ const { startBattle } = battleStore;
 <template>
 	<div id="game">
 		<ZoneInfo />
+		<EnemyLine />
 
 		<div class="stats">
 			<PlayerStats />

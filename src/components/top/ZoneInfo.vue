@@ -9,7 +9,7 @@ const { zone, enemyNumber } = storeToRefs(battleStore);
 
 <template>
 	<div class="zone-info">
-		<h1>Zone {{ zone }}</h1>
+		<h2>Zone {{ zone }}</h2>
 		<p>Enemy {{ enemyNumber }}/100</p>
 	</div>
 </template>
@@ -17,10 +17,21 @@ const { zone, enemyNumber } = storeToRefs(battleStore);
 <style lang="scss" scoped>
 .zone-info {
 	position: absolute;
-	top: 8px;
+	top: 0;
+	left: 0;
+	z-index: 1;
 
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	width: 150px;
+
+	background-color: #e7e7e7;
+	padding: 8px;
+
+	border: 0 solid black;
+	border-width: 0 2px 2px 0;
+	border-bottom-right-radius: 8px;
 }
 </style>
