@@ -55,7 +55,6 @@ function move() {
 <style lang="scss" scoped>
 .enemy-line {
 	position: absolute;
-	top: 0;
 	left: 150px;
 
 	display: flex;

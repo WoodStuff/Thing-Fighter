@@ -17,7 +17,6 @@ const { zone, enemyNumber } = storeToRefs(battleStore);
 <style lang="scss" scoped>
 .zone-info {
 	position: absolute;
-	top: 0;
 	left: 0;
 	z-index: 1;
 
