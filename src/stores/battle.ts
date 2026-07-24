@@ -100,5 +100,7 @@ export const useBattleStore = defineStore('battle', () => {
 		enemyNumber,
 
 		startBattle,
+		stopBattle,
+		nextEnemy,
 	}
 });

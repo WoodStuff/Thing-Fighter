@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { useBattleStore } from '@/stores/battle';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, useTemplateRef, watch } from 'vue';
 import EnemySquare from './EnemySquare.vue';
+import gsap from 'gsap';
+import { useWindowSize } from '@/composables/useWindowSize.ts';
 
 const battleStore = useBattleStore();
-const { zone } = storeToRefs(battleStore);
+const { zone, enemyNumber } = storeToRefs(battleStore);
+
+const el = useTemplateRef('el');
 
 type Enemy = { zone: number, id: number };
 
@@ -17,10 +21,28 @@ const enemies = computed<Enemy[]>(() => {
 	}));
 	return enemyArray;
 });
+
+const { width } = useWindowSize();
+
+watch([enemyNumber, width], move);
+
+function move() {
+	const greenCells = 6;
+
+	const cellsToMove = enemyNumber.value - 1 - greenCells;
+	const x = Math.min(Math.max(cellsToMove * -40, -(4000 - width.value + 150)), 0);
+
+	gsap.to(el.value, {
+		x,
+
+		duration: 0.25,
+		ease: 'power2.out',
+	});
+}
 </script>
 
 <template>
-	<div class="enemy-line">
+	<div class="enemy-line" ref="el">
 		<EnemySquare
 			v-for="enemy in enemies"
 			:key="enemy.id"
@@ -37,8 +59,5 @@ const enemies = computed<Enemy[]>(() => {
 	left: 150px;
 
 	display: flex;
-
-	width: calc(100% - 150px);
-	overflow: hidden;
 }
 </style>
